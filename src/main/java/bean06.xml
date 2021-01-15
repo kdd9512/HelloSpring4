@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="kr" class="kdd9512.bean.HelloSpring4Bean04KR"/>
+    <bean id="en" class="kdd9512.bean.HelloSpring4Bean04EN"/>
+    <bean id="jp" class="kdd9512.bean.HelloSpring4Bean04JP"/>
+    <!--  이런 식으로 조건이 생길때마다 하나하나 다 입력해야 하는 것은 매우 비효율적이고 관리하기가 짜증남. -->
+    <!--  그걸 위한 어노테이션, autowire. HelloSpring4App11 주석 참고.  -->
+
+</beans>
