@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="kdd9512.sungjuk" />
+
+    <bean id="dbcpDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          p:driverClassName="org.mariadb.jdbc.Driver"
+          p:url="jdbc:mariadb://bigdata.cu13n6b9juzc.ap-northeast-2.rds.amazonaws.com:3306/playground"
+          p:username="playground"
+          p:password="play2020"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dbcpDataSource"
+          p:mapperLocations="classpath:mybatis3/SungJukMapper.xml"/>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory" index="0"/>
+    </bean>
+
+
+</beans>

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository("sjdao")
 public class SungJukV10DAOImpl implements SungJukV10DAO{
@@ -24,7 +25,7 @@ public class SungJukV10DAOImpl implements SungJukV10DAO{
             pstmt.setInt(2, sj.getKor());
             pstmt.setInt(3, sj.getEng());
             pstmt.setInt(4, sj.getMat());
-            pstmt.setInt(5, sj.getSum());
+            pstmt.setInt(5, sj.gettot());
             pstmt.setDouble(6, sj.getMean());
             pstmt.setString(7, sj.getGrd()+"");
             int cnt = pstmt.executeUpdate();
@@ -115,7 +116,7 @@ public class SungJukV10DAOImpl implements SungJukV10DAO{
             pstmt.setInt(1, sj.getKor());
             pstmt.setInt(2, sj.getEng());
             pstmt.setInt(3, sj.getMat());
-            pstmt.setInt(4, sj.getSum());
+            pstmt.setInt(4, sj.gettot());
             pstmt.setDouble(5, sj.getMean());
             pstmt.setString(6, sj.getGrd()+"");
             pstmt.setInt(7, sj.getSjno());

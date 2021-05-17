@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+    <insert id="insertMember" statementType="PREPARED" parameterType="kdd9512.data.vo.MemberVO">
+        insert into member
+        values (#{userid}, #{passwd}, #{name}, #{grade}, #{points}, #{regdate})
+    </insert>
+    <!--  넘길 값이 많으므로 parameterType은 kdd9512.data.vo.MemberVO 를 입력해야 한다.  -->
+
+    <update id="updateMember" statementType="PREPARED" parameterType="kdd9512.data.vo.MemberVO">
+        update member
+        set name = #{name}, grade = #{grade}, points = #{points}
+        where userid = #{userid}
+    </update>
+
+    <delete id="deleteMember" statementType="PREPARED" parameterType="String">
+        delete
+        from member
+        where name = #{name}
+    </delete>
+    <!--  String name 을 기준으로 동작하므로 String 이면 됌.  -->
+
+    <select id="selectList" statementType="PREPARED" resultType="kdd9512.data.vo.MemberVO">
+        select userid, grade, regdate
+        from member
+    </select>
+
+    <select id="selectOneList" statementType="PREPARED" parameterType="String" resultType="kdd9512.data.vo.MemberVO">
+        select *
+        from member
+        where userid = #{userid} limit 1
+    </select>
+</mapper>

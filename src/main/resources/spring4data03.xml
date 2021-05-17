@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--  어노테이션 기반 bean 설정  -->
+    <context:component-scan base-package="kdd9512.data.service, kdd9512.data.dao"/>
+
+    <!--  표준 JDBC API : 소규모  -->
+    <bean id="basicDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="org.mariadb.jdbc.Driver"
+         p:url="jdbc:mariadb://bigdata.cu13n6b9juzc.ap-northeast-2.rds.amazonaws.com:3306/playground"
+         p:username="playground"
+         p:password="play2020"/>
+
+    <!--  DBCP API : 대규모 -->
+    <!--  database connection pool  -->
+    <!--  요청이 올때마다 connection 객체를 생성하는 것이 아니라  -->
+    <!--  일정수의 connection 객체를 미리 만들어 pool에 저장해 두고  -->
+    <!--  요청이 발생하면 pool에서 connection 객체를 가져다 쓰게 하는 방식.  -->
+    <!--  connection 객채를 다 사용하면 파과하지 않고 pool에 반납함.  -->
+
+    <bean id="dbcpDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+        p:driverClassName="org.mariadb.jdbc.Driver"
+        p:url="jdbc:mariadb://bigdata.cu13n6b9juzc.ap-northeast-2.rds.amazonaws.com:3306/playground"
+        p:username="playground"
+        p:password="play2020"/>
+    <!--  JNDI API : 분산환경  -->
+
+    <!--  mybatis3 설정 1  -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+        p:dataSource-ref="dbcpDataSource"
+        p:mapperLocations="classpath:mybatis3/MemberMapper.xml"/>
+
+
+    <!--  mybatis3 설정 2  -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory" index="0"/>
+    </bean>
+
+
+    <!--  스프링 JDBC template 정의 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dbcpDataSource"/>
+    </bean>
+
+
+</beans>

@@ -6,21 +6,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-@Service("sjsrv")
-public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
+@Service("sjsrv12")
+public class SungJukV12ServiceImpl implements SungJukV10Service, SungJukUI{
 
     @Autowired
 //  이하 기본생성자를 대신하는  Autowired
-    private SungJukV10DAO sjdao; // 변수 초기화.
+    private SungJukV10DAO sjdao12; // 변수 초기화.
 
-//    public SungJukV10ServiceImpl() {
-//        sjdao = new SungJukV10DAOImpl(); // SungJukV10DAOImpl() 를 변수에 담음.
-//    }
 
     public void displayMenu() {
         StringBuilder sb = new StringBuilder();
         sb.append("-------------------\n")
-                .append("성적 처리프로그램 v10\n")
+                .append("성적 처리프로그램 v12\n")
                 .append("-------------------\n")
                 .append("1. 성적 데이터 입력\n")
                 .append("2. 성적 데이터 조회\n")
@@ -52,10 +49,8 @@ public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
 
         computeSungJuk(sj);
 
-        // 최종적으로 처리한 성적데이터를 sungjuk테이블에 저장하기 위해
-        // SungJukV10DAO의 insertSungJuk메서드를 호출하고
-        // 매개변수로 성적데이터를 넘김
-        String result = sjdao.insertSungJuk(sj);
+
+        String result = sjdao12.insertSungJuk(sj);
         System.out.println(result);
 
     }
@@ -75,16 +70,13 @@ public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
 
     // 조회할 성적데이터를 DAO로부터 넘겨받아 출력
     public void readSungJuk() {
-        String fmt = "번호:%s, 이름:%s, 국어:%d, 영어:%d, 수학:%d, 등록일:%s\n";
         StringBuilder sb = new StringBuilder();
-
-        ArrayList<SungJukVO> sjs = sjdao.selectSungJuk(); // !!!
-
-        for(SungJukVO sj : sjs) {
-            String result = String.format( fmt, sj.getSjno(),
+        String fmt = "번호:%s, 이름:%s, 국어:%d, 영어:%d, 수학:%d, 등록일:%s\n";
+        ArrayList<SungJukVO> sjvo = sjdao12.selectSungJuk();
+        for(SungJukVO sj : sjvo) {
+           sb.append(String.format( fmt, sj.getSjno(),
                 sj.getName(),sj.getKor(),sj.getEng(),sj.getMat(),
-                sj.getRegdate().substring(0,10) );
-            sb.append(result);
+                sj.getRegdate().substring(0,10)));
         }
 
         System.out.println(sb.toString());
@@ -98,7 +90,7 @@ public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
         System.out.print("조회할 성적번호는? ");
         String sjno = sc.nextLine();
 
-        SungJukVO sj = sjdao.selectOneSungJuk(sjno);
+        SungJukVO sj = sjdao12.selectOneSungJuk(sjno);
 
         String result = String.format(fmt, sj.getSjno(),
                 sj.getName(), sj.getKor(), sj.getEng(),
@@ -123,7 +115,7 @@ public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
 
         computeSungJuk(sj);
 
-        String result = sjdao.updateSungJuk(sj);
+        String result = sjdao12.updateSungJuk(sj);
         System.out.println(result);
     }
 
@@ -133,7 +125,7 @@ public class SungJukV10ServiceImpl implements SungJukV10Service, SungJukUI{
         System.out.print("삭제할 성적번호는? ");
         int sjno = sc.nextInt();
 
-        String result = sjdao.deleteSungJuk(sjno);
+        String result = sjdao12.deleteSungJuk(sjno);
         System.out.println(result);
     }
 }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class EmployeeV2ServiceImpl implements EmployeeV2Service, EmployeeV2UI{
 
     @Autowired
-    private EmployeeV2DAO empdao;
+    private EmployeeV2DAO empdao; // 결과값을 받을 변수 초기화.
 
     public void displayMenu() {
 
